@@ -8,9 +8,9 @@ import { Inter } from 'next/font/google';
 import { motion } from 'framer-motion';
 import {
   Phone,
-  Instagram,
-  Facebook,
-  MessageCircle,
+  Instagram, // Importado para usar en ContactLink
+  Facebook,  // Importado para usar en ContactLink
+  MessageCircle, // Representa TikTok, importado para ContactLink
   MapPin,
   Stethoscope,
   Dumbbell,
@@ -23,8 +23,6 @@ import {
 const inter = Inter({ subsets: ['latin'] });
 
 // --- INICIO: Estilos CSS de la marca ---
-// Componente que inyecta un bloque de estilos CSS en la página.
-// Esto nos permite usar los colores de la marca sin modificar tailwind.config.js
 const BrandStyles = () => (
   <style jsx global>{`
     :root {
@@ -36,43 +34,43 @@ const BrandStyles = () => (
       --brand-pink-light: #fef0f4;
       --brand-cyan: #4ed3d3;
     }
-
-    /* Clases de utilidad personalizadas */
     .bg-brand-purple-light { background-color: var(--brand-purple-light); }
     .text-brand-purple-dark { color: var(--brand-purple-dark); }
     .text-brand-pink { color: var(--brand-pink); }
     .bg-brand-pink { background-color: var(--brand-pink); }
     .bg-brand-pink-light { background-color: var(--brand-pink-light); }
-    
-    .shadow-brand-pink-glow {
-      box-shadow: 0 10px 15px -3px rgba(233, 74, 129, 0.2), 0 4px 6px -4px rgba(233, 74, 129, 0.2);
-    }
-    .hover-shadow-brand-pink-glow:hover {
-      box-shadow: 0 20px 25px -5px rgba(233, 74, 129, 0.3), 0 8px 10px -6px rgba(233, 74, 129, 0.3);
-    }
+    .shadow-brand-pink-glow { box-shadow: 0 10px 15px -3px rgba(233, 74, 129, 0.2), 0 4px 6px -4px rgba(233, 74, 129, 0.2); }
+    .hover-shadow-brand-pink-glow:hover { box-shadow: 0 20px 25px -5px rgba(233, 74, 129, 0.3), 0 8px 10px -6px rgba(233, 74, 129, 0.3); }
     .hover-bg-brand-pink-dark:hover { background-color: var(--brand-pink-dark); }
-    .hover-shadow-brand-purple-glow:hover {
-      box-shadow: 0 20px 25px -5px rgba(94, 58, 156, 0.1), 0 8px 10px -6px rgba(94, 58, 156, 0.1);
-    }
-    
-    .bg-brand-gradient {
-      background-image: linear-gradient(to bottom right, var(--brand-purple), var(--brand-pink));
-    }
-
-    .border-brand-purple-10 {
-        border-color: rgba(94, 58, 156, 0.1);
-    }
-    .hover-bg-brand-pink-20:hover {
-      background-color: rgba(233, 74, 129, 0.2);
-    }
-
+    .hover-shadow-brand-purple-glow:hover { box-shadow: 0 20px 25px -5px rgba(94, 58, 156, 0.1), 0 8px 10px -6px rgba(94, 58, 156, 0.1); }
+    .bg-brand-gradient { background-image: linear-gradient(to bottom right, var(--brand-purple), var(--brand-pink)); }
+    .border-brand-purple-10 { border-color: rgba(94, 58, 156, 0.1); }
+    .hover-bg-brand-pink-20:hover { background-color: rgba(233, 74, 129, 0.2); }
   `}</style>
 );
 // --- FIN: Estilos CSS de la marca ---
 
+// INTERFAZ CORREGIDA para ESLint/TypeScript
+interface ContactLinkProps {
+  href: string;
+  icon: React.ReactNode; // Acepta componentes de icono, no solo strings
+  platform: string;
+  handle: string;
+  bgColorClass: string;
+  textColorClass: string;
+  hoverColorClass: string;
+}
 
-// Componente reutilizable para enlaces de contacto
-const ContactLink = ({ href, icon, platform, handle, bgColorClass, textColorClass, hoverColorClass }) => (
+// COMPONENTE CORREGIDO para aplicar clases hover correctamente
+const ContactLink: React.FC<ContactLinkProps> = ({ 
+  href, 
+  icon, 
+  platform, 
+  handle, 
+  bgColorClass, 
+  textColorClass, 
+  hoverColorClass 
+}) => (
   <a
     href={href}
     target="_blank"
@@ -108,30 +106,36 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
-      <BrandStyles /> {/* Inyecta nuestros estilos personalizados en la página */}
+      <BrandStyles />
       <div className={`min-h-screen bg-brand-purple-light font-sans text-gray-800 ${inter.className}`}>
         
-        <nav className="absolute top-0 left-0 right-0 z-10 p-6">
-          <div className="max-w-7xl mx-auto">
-            <Image
-              src="/logo-gaia.png" // Asegúrate que el logo está en /public
-              alt="Logo de Gaia Fisioterapia"
-              width={150}
-              height={50}
-              priority
-            />
-          </div>
-        </nav>
-
-        <header className="relative pt-40 pb-24 px-6 text-center overflow-hidden">
+        {/* === SECCIÓN HERO CORREGIDA === */}
+        <header className="relative pt-28 pb-24 px-6 text-center overflow-hidden">
+          {/* Elementos decorativos de fondo */}
           <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-gradient-to-br from-brand-pink to-brand-cyan rounded-full opacity-10" style={{ filter: 'blur(48px)' }}></div>
           <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-gradient-to-tl from-brand-purple to-brand-cyan rounded-full opacity-10" style={{ filter: 'blur(48px)' }}></div>
           
           <div className="relative z-1 max-w-4xl mx-auto">
-            <motion.h1
+            {/* LOGO MOVIDO AQUÍ, CENTRADO Y CON TAMAÑO ADECUADO */}
+            <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="flex justify-center mb-8"
+            >
+              <Image
+                src="/logo-gaia.png" // Asegúrate que el logo está en /public
+                alt="Logo de Gaia Fisioterapia"
+                width={350} // Un tamaño más balanceado
+                height={57} // Mantener la proporción
+                priority
+              />
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-6xl font-extrabold text-brand-purple-dark tracking-tight"
             >
               Fisioterapia y Terapia Ocupacional a Domicilio
@@ -217,6 +221,7 @@ const LandingPage: React.FC = () => {
               <h2 className="text-3xl font-bold text-brand-purple-dark tracking-tight">Conecta con Nosotros</h2>
               <p className="mt-2 text-lg text-gray-600">Estamos listos para ayudarte a empezar tu camino hacia el bienestar.</p>
             </div>
+            {/* SECCIÓN DE CONTACTO CORREGIDA USANDO ICONOS */}
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
               <ContactLink 
                 href="https://wa.me/50379944972"
