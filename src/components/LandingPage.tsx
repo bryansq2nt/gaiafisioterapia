@@ -17,7 +17,8 @@ import {
   Leaf,
   Baby,
   Bone,
-  Waves
+  Waves,
+  Mail // <-- Se ha añadido este icono
 } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -264,9 +265,52 @@ const LandingPage: React.FC = () => {
 
         </main>
 
-        <footer className="bg-white">
-          <div className="max-w-7xl mx-auto py-8 px-6 text-center text-gray-500 border-t border-brand-purple-10">
-            <p>© {new Date().getFullYear()} Gaia Fisioterapia. Todos los derechos reservados.</p>
+        {/* Footer */}
+        <footer className="bg-white border-t border-brand-purple-10">
+          <div className="max-w-7xl mx-auto py-12 px-6 text-center">
+            {/* Sección de Créditos del Desarrollador */}
+            <div className="mb-8">
+              <p className="text-sm text-gray-500">
+                Experiencia digital creada con dedicación por
+              </p>
+              <p className="text-lg font-semibold text-brand-purple-dark mt-1">
+                Bryan Murgas
+              </p>
+              <div className="mt-4 flex justify-center items-center gap-6 text-gray-600">
+                <a 
+                  href="mailto:bryan.murgas@hotmail.com" 
+                  className="flex items-center gap-2 hover:text-brand-pink transition-colors duration-300"
+                  aria-label="Enviar correo a Bryan Murgas"
+                >
+                  <Mail size={18} />
+                  <span className="text-sm">Email</span>
+                </a>
+                <span className="text-gray-300">|</span>
+                <a 
+                  href="https://wa.me/15713761694" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-brand-pink transition-colors duration-300"
+                  aria-label="Contactar a Bryan Murgas por WhatsApp"
+                >
+                  <MessageCircle size={18} />
+                  <span className="text-sm">WhatsApp</span>
+                </a>
+              </div>
+              <p className="text-md text-brand-pink mt-4 font-semibold">
+                ¿Tienes un proyecto en mente? ¡Hablemos!
+              </p>
+            </div>
+
+            {/* Línea divisoria sutil */}
+            <hr className="w-24 mx-auto border-gray-200" />
+
+            {/* Copyright de Gaia */}
+            <div className="mt-8">
+              <p className="text-xs text-gray-400">
+                © {new Date().getFullYear()} Gaia Fisioterapia. Todos los derechos reservados.
+              </p>
+            </div>
           </div>
         </footer>
       </div>
